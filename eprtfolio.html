@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Princess Calo — IT E-Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-deep: #050b14;
+            --bg-card: rgba(11, 25, 48, 0.85);
+            --navy-primary: #0a192f;
+            --navy-light: #172a45;
+            --accent-blue: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.25);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-glow: rgba(56, 189, 248, 0.4);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-main);
+            font-family: 'Space Grotesk', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle at 20% 30%, rgba(56, 189, 248, 0.05) 0%, transparent 40%),
+                              radial-gradient(circle at 80% 70%, rgba(14, 165, 233, 0.05) 0%, transparent 40%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.25rem 5%;
+            background: rgba(5, 11, 20, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(56, 189, 248, 0.1);
+            z-index: 1000;
+        }
+
+        .nav-logo {
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: -0.5px;
+            color: var(--text-main);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-blue);
+        }
+
+        header.hero {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            align-items: center;
+            padding: 8rem 8% 4rem;
+            gap: 3rem;
+        }
+
+        .hero-content h1 {
+            font-size: clamp(3rem, 5vw, 5.5rem);
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -2px;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ffffff 30%, var(--accent-blue) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-content p.subtitle {
+            font-size: 1.15rem;
+            color: var(--accent-blue);
+            margin-bottom: 1rem;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .hero-content p.bio-intro {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            max-width: 540px;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.85rem 2rem;
+            background: transparent;
+            color: var(--accent-blue);
+            border: 1.5px solid var(--accent-blue);
+            border-radius: 50px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.1);
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-blue);
+            color: var(--bg-deep);
+            box-shadow: 0 0 25px var(--accent-glow);
+        }
+
+        .hero-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
+            padding: 2rem;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(56, 189, 248, 0.1);
+        }
+
+        .card-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.95rem;
+        }
+
+        .card-row:last-child {
+            border-bottom: none;
+        }
+
+        .card-label {
+            color: var(--text-muted);
+        }
+
+        .card-value {
+            color: var(--text-main);
+            font-weight: 500;
+            text-align: right;
+        }
+
+        .badge-tag {
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.1);
+            color: var(--accent-blue);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            margin-bottom: 1rem;
+        }
+
+        section {
+            padding: 6rem 8%;
+            border-top: 1px solid rgba(56, 189, 248, 0.08);
+        }
+
+        section h2 {
+            font-size: clamp(2rem, 3vw, 3rem);
+            margin-bottom: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ffffff 40%, var(--text-muted) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .about-grid {
+    display: flex;
+    flex-direction: column; /* Gihimo kining column aron mag-stack ang photo ug text */
+    align-items: center;    /* Gi-center silang duha sa tunga */
+    gap: 2.5rem;
+}
+
+        .profile-img-container {
+            width: 100%;
+            max-width: 300px;
+            aspect-ratio: 4/5; /* Gi-adjust para ma-accommodate ang portrait ID photo */
+            border-radius: 20px;
+            padding: 4px;
+            background: linear-gradient(135deg, var(--accent-blue), transparent);
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.25);
+            margin: 0 auto;
+            overflow: hidden;
+            background-color: var(--navy-light);
+        }
+
+        .profile-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 16px;
+    object-fit: cover;
+    object-position: center 20%; /* Gi-ilisdan gikan sa 'lop' ngadto sa 'top' */
+    display: block;
+}
+
+        .about-text-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
+            padding: 2.5rem;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            width: 100%;
+        }
+
+        .about-text-card p {
+            color: var(--text-muted);
+            line-height: 1.8;
+            font-size: 1.05rem;
+            margin-bottom: 1rem;
+        }
+
+        .about-text-card p:last-child {
+            margin-bottom: 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .content-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glow);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px var(--accent-glow);
+        }
+
+        .content-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-main);
+        }
+
+        .content-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-meta {
+            font-size: 0.85rem;
+            color: var(--accent-blue);
+            font-family: 'Fira Code', monospace;
+            margin-bottom: 1rem;
+        }
+
+        .skills-category {
+            margin-bottom: 2.5rem;
+        }
+
+        .skills-category h3 {
+            font-size: 1.1rem;
+            color: var(--accent-blue);
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .skills-flex {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .skill-pill {
+            background: var(--navy-light);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            color: var(--text-main);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .privacy-box {
+            background: rgba(56, 189, 248, 0.05);
+            border-left: 4px solid var(--accent-blue);
+            padding: 1.5rem;
+            border-radius: 0 12px 12px 0;
+            margin-top: 3rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .privacy-box strong {
+            color: var(--text-main);
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 5%;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(56, 189, 248, 0.1);
+            background: var(--navy-primary);
+        }
+
+        @media (max-width: 968px) {
+            header.hero {
+                grid-template-columns: 1fr;
+                padding-top: 7rem;
+            }
+            .about-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .nav-links {
+                display: none;
+            }
+            header.hero {
+                padding: 6rem 5% 3rem;
+            }
+            section {
+                padding: 4rem 5%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="nav-logo">Princess Calo</div>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#resume">Résumé</a></li>
+            <li><a href="#work">Work</a></li>
+            <li><a href="#casestudies">Case Studies</a></li>
+            <li><a href="#credentials">Credentials</a></li>
+            <li><a href="#references">References</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content">
+            <span class="badge-tag">BS Information Technology</span>
+            <h1>Princess<br>Calo</h1>
+            <p class="subtitle">IT Specialist | Junior Software Developer & Network Enthusiast</p>
+            <p class="bio-intro">Building reliable software applications, optimizing structured databases, and designing secure multi-router networks to streamline practical operations.</p>
+            <a href="#work" class="btn-primary">See my work</a>
+        </div>
+        <div class="hero-card">
+            <div class="card-row">
+                <span class="card-label">Degree</span>
+                <span class="card-value">BS Information Technology</span>
+            </div>
+            <div class="card-row">
+                <span class="card-label">Institution</span>
+                <span class="card-value">Caraga State University</span>
+            </div>
+            <div class="card-row">
+                <span class="card-label">Specialization</span>
+                <span class="card-value">Software & Networks</span>
+            </div>
+            <div class="card-row">
+                <span class="card-label">Status</span>
+                <span class="card-value" style="color: var(--accent-blue);">Open to IT Roles</span>
+            </div>
+        </div>
+    </header>
+
+    <section id="about">
+    <h2>About me</h2>
+    <div class="about-grid">
+        <!-- Left side: Image container -->
+        <div class="profile-img-container">
+            <img src="74a1c2e8-d3f1-4924-81a6-ce92a71869b3_2.jpg" alt="Princess Calo" class="profile-img">
+        </div>
+        <!-- Right side: Bio text card -->
+        <div class="about-text-card">
+            <p>BS Information Technology student specializing in system development, object-oriented programming, and network infrastructure design.</p>
+            <p>Driven by a commitment to technical precision and clean architecture, transforming conceptual logic into functional systems that solve real-world operational challenges.</p>
+        </div>
+    </div>
+</section>
+
+    <section id="resume">
+        <h2>Résumé</h2>
+        <div class="grid-3">
+            <div class="content-card">
+                <div>
+                    <span class="card-meta">Objective</span>
+                    <h3>Professional Goal</h3>
+                    <p>Leveraging strong foundations in Java, C programming, and network configurations to build reliable software solutions and contribute effectively as an entry-level IT professional.</p>
+                </div>
+            </div>
+            <div class="content-card">
+                <div>
+                    <span class="card-meta">Education</span>
+                    <h3>Caraga State University</h3>
+                    <p>Bachelor of Science in Information Technology<br><span style="color: var(--text-muted); font-size: 0.85rem;">Ampayon, Butuan City</span></p>
+                </div>
+            </div>
+            <div class="content-card">
+                <div>
+                    <span class="card-meta">Core Focus</span>
+                    <h3>Technical Expertise</h3>
+                    <p>Experienced in database design, dynamic memory management in C, Object-Oriented Programming principles in Java, and static routing protocols.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="work">
+        <h2>Work samples</h2>
+        <div class="grid-3">
+            <div class="content-card">
+                <div>
+                    <span class="card-meta">Project 1 | Networking</span>
+                    <h3>Multi-Router Subnet Simulation</h3>
+                    <p>Configured static routes, router interfaces, and stub networks across multi-node topologies in Cisco Packet Tracer to ensure seamless packet delivery.</p>
+                </div>
+                <span style="font-size: 0.85rem; color: var(--accent-blue);">Cisco Packet Tracer</span>
+            </div>
+            <div class="content-card">
+                <div>
+                    <span class="card-meta">Project 2 | Software Dev</span>
+                    <h3>Student Record Management System</h3>
+                    <p>Developed a robust console application in Java incorporating encapsulation, Scanner input validation, and structured object arrays for record tracking.</p>
+                </div>
+                <span style="font-size: 0.85rem; color: var(--accent-blue);">Java / Eclipse IDE</span>
+            </div>
+            <div class="content-card">
+                <div>
+                    <span class="card-meta">Project 3 | Web Development</span>
+                    <h3>Interactive Front-End Web Application</h3>
+                    <p>Designed a responsive web interface utilizing semantic HTML5 structure, custom CSS class selectors, and dynamic layout styling.</p>
+                </div>
+                <span style="font-size: 0.85rem; color: var(--accent-blue);">HTML5 / CSS3 / VS Code</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="casestudies">
+        <h2>Case studies</h2>
+        <div class="grid-3" style="grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));">
+            <div class="content-card">
+                <div>
+                    <span class="card-meta">Case Study 1</span>
+                    <h3>Network Topology Optimization</h3>
+                    <p><strong>Situation:</strong> Subnet routing inefficiencies caused connectivity loss in multi-router simulated environments.<br><br>
+                    <strong>Task:</strong> Restructure static route tables and verify interface configurations.<br><br>
+                    <strong>Action:</strong> Implemented precise next-hop routing rules and tested connectivity.<br><br>
+                    <strong>Result:</strong> Achieved 100% network connectivity with zero packet loss across all nodes.</p>
+                </div>
+            </div>
+            <div class="content-card">
+                <div>
+                    <span class="card-meta">Case Study 2</span>
+                    <h3>Memory Leak Resolution in C</h3>
+                    <p><strong>Situation:</strong> Dynamic memory allocation routines encountered dangling pointers and stability issues.<br><br>
+                    <strong>Task:</strong> Audit pointer mechanics and implement rigorous cleanup logic.<br><br>
+                    <strong>Action:</strong> Utilized proper `free()` routines and pointer nullification post-deallocation.<br><br>
+                    <strong>Result:</strong> Eliminated memory leaks, ensuring 100% runtime stability during stress testing.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="credentials">
+        <h2>Credentials</h2>
+        <div class="grid-3">
+            <div class="content-card">
+                <div>
+                    <span class="card-meta">August 2026</span>
+                    <h3>Secure Software Fundamentals</h3>
+                    <p>Information and Communications Technology Academy<br><span style="font-family: 'Fira Code', monospace; font-size: 0.8rem; color: var(--accent-blue);">[Redacted ID: ICT-XXXX-8921]</span></p>
+                </div>
+            </div>
+            <div class="content-card">
+                <div>
+                    <span class="card-meta">February 2025</span>
+                    <h3>Database Management and SQL</h3>
+                    <p>DICT Digital Learning Program<br><span style="font-family: 'Fira Code', monospace; font-size: 0.8rem; color: var(--accent-blue);">[Redacted ID: DICT-XXXX-4412]</span></p>
+                </div>
+            </div>
+            <div class="content-card">
+                <div>
+                    <span class="card-meta">November 2024</span>
+                    <h3>Programming Essentials</h3>
+                    <p>Tech Innovators Training<br><span style="font-family: 'Fira Code', monospace; font-size: 0.8rem; color: var(--accent-blue);">[Redacted ID: TECH-XXXX-1105]</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="references">
+        <h2>References</h2>
+        <div class="grid-3">
+            <div class="content-card">
+                <div>
+                    <span class="card-meta">Academic Reference</span>
+                    <h3>IT Faculty / Department Head</h3>
+                    <p>Caraga State University<br><span style="font-size: 0.85rem; color: var(--text-muted);">Ampayon, Butuan City</span></p>
+                </div>
+            </div>
+            <div class="content-card">
+                <div>
+                    <span class="card-meta">Professional Reference</span>
+                    <h3>Academic & Industry Mentors</h3>
+                    <p>Available upon official request for professional verification.<br><span style="font-size: 0.85rem; color: var(--accent-blue);">Caraga State University</span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <h2>Skills</h2>
+        <div class="skills-category">
+            <h3>Programming Languages</h3>
+            <div class="skills-flex">
+                <span class="skill-pill">C</span>
+                <span class="skill-pill">Java</span>
+                <span class="skill-pill">HTML5</span>
+                <span class="skill-pill">CSS3</span>
+            </div>
+        </div>
+        <div class="skills-category">
+            <h3>Development Tools & Environments</h3>
+            <div class="skills-flex">
+                <span class="skill-pill">Visual Studio Code</span>
+                <span class="skill-pill">Eclipse IDE</span>
+                <span class="skill-pill">Code::Blocks</span>
+                <span class="skill-pill">Cisco Packet Tracer</span>
+                <span class="skill-pill">OnlineGDB</span>
+            </div>
+        </div>
+        <div class="skills-category">
+            <h3>Core Competencies</h3>
+            <div class="skills-flex">
+                <span class="skill-pill">Object-Oriented Programming (OOP)</span>
+                <span class="skill-pill">Static Routing & Subnetting</span>
+                <span class="skill-pill">Dynamic Memory Management</span>
+                <span class="skill-pill">Technical Problem-Solving</span>
+            </div>
+        </div>
+
+        <div class="privacy-box">
+            <strong>RA 10173 Compliance Notice:</strong> In compliance with the Data Privacy Act of 2012 (Republic Act No. 10173), sensitive personal details (such as exact residential addresses, personal phone numbers, and unmasked credential IDs) have been intentionally redacted or omitted to ensure complete data security and privacy.
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2>Contact</h2>
+        <div class="content-card" style="max-width: 600px; margin: 0 auto; text-align: center;">
+            <h3>Let's Connect</h3>
+            <p>Looking for a dedicated IT professional or junior developer for your team? Feel free to reach out via professional channels.</p>
+            <a href="mailto:princess.calo@caraga.edu.ph" class="btn-primary" style="margin-top: 1rem;">Send Message</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Princess Calo. Built for Caraga State University Workplace Communication Portfolio Requirement.</p>
+    </footer>
+
+</body>
+</html>
